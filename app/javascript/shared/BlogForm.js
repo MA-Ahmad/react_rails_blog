@@ -19,6 +19,10 @@ const BlogForm = ({ match, editMode }) => {
           setAuthor(response.author);
           setContent(response.content);
         });
+    } else {
+      setTitle("");
+      setAuthor("");
+      setContent("");
     }
   }, [editMode]);
 

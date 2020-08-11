@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "../components/Home";
 import Blogs from "../components/Blogs";
+import Blog from "../components/Blog";
 import BlogForm from "../shared/BlogForm";
 import Header from "../shared/Header";
 
@@ -26,6 +27,7 @@ export default (
             return <BlogForm {...props} editMode={false} />;
           }}
         />
+        <Route path="/blogs/:id" exact component={Blog} />
       </Switch>
     </div>
   </Router>

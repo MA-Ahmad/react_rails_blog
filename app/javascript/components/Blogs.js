@@ -53,7 +53,7 @@ const Blogs = props => {
               className="max-w-sm rounded overflow-hidden shadow-lg"
               key={blog.id}
             >
-              <Link to={`/blogs/edit/${blog.id}`}>
+              <Link to={`/blogs/${blog.id}`}>
                 <Img
                   className="w-full"
                   src={"https://bit.ly/2Z4KKcF"}
@@ -70,15 +70,23 @@ const Blogs = props => {
                 </Dotdotdot>
               </div>
               <div className="px-3 py-2 bg-white lg:flex items-center justify-between">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 truncate">
+                <span className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 truncate">
                   {blog.author}
                 </span>
-                <span
-                  onClick={() => deleteBlog(blog.id)}
-                  className="inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 cursor-pointer"
-                >
-                  Delete
-                </span>
+
+                <div>
+                  <Link to={`/blogs/edit/${blog.id}`}>
+                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 cursor-pointer">
+                      Edit
+                    </span>
+                  </Link>
+                  <span
+                    onClick={() => deleteBlog(blog.id)}
+                    className="inline-block bg-red-200 rounded-full px-3 py-1 ml-2 text-sm font-semibold text-gray-700 cursor-pointer"
+                  >
+                    Delete
+                  </span>
+                </div>
               </div>
             </div>
           );
