@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Dotdotdot from "react-dotdotdot";
 import Alert from "../shared/Alert";
+import { Img } from "react-image";
+import PageLoader from "../shared/PageLoader";
 
 const Blogs = props => {
   const [blogs, setBlogs] = useState([]);
@@ -52,10 +54,11 @@ const Blogs = props => {
               key={blog.id}
             >
               <Link to={`/blogs/edit/${blog.id}`}>
-                <img
+                <Img
                   className="w-full"
-                  src="https://bit.ly/2Z4KKcF"
-                  alt="Sunset in the mountains"
+                  src={"https://bit.ly/2Z4KKcF"}
+                  alt="Blog image"
+                  loader={<PageLoader />}
                 />
               </Link>
               <div className="px-3 py-2 bg-white">
