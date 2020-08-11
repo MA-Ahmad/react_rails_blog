@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Dotdotdot from "react-dotdotdot";
+import Alert from "../shared/Alert";
 
 const Blogs = props => {
   const [blogs, setBlogs] = useState([]);
+  const [blogId, setBlogId] = useState("");
+  const [deleteAlert, setDeleteAlert] = useState(false);
 
   useEffect(() => {
     const url = "/api/v1/blogs";
@@ -13,19 +16,48 @@ const Blogs = props => {
         console.log(response);
         setBlogs(response);
       });
-  }, []);
+  }, [blogId]);
+
+  const deleteBlog = id => {
+    const url = `/api/v1/blogs/destroy/${id}`;
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "X-CSRF-Token": token,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .catch(error => console.log(error.message));
+    setBlogId(id);
+    setDeleteAlert(true);
+  };
 
   return (
-    <div className="grid grid-cols-4 grid-flow-row gap-4">
-      {blogs.map(blog => {
-        return (
-          <Link to={`/blogs/edit/${blog.id}`} key={blog.id}>
-            <div className="max-w-sm rounded overflow-hidden shadow-lg">
-              <img
-                className="w-full"
-                src="https://bit.ly/2Z4KKcF"
-                alt="Sunset in the mountains"
-              />
+    <>
+      {deleteAlert ? (
+        <Alert color="red" message="Blog deleted succesfully" />
+      ) : null}
+      <div className="grid grid-cols-4 grid-flow-row gap-4">
+        {blogs.map(blog => {
+          return (
+            <div
+              className="max-w-sm rounded overflow-hidden shadow-lg"
+              key={blog.id}
+            >
+              <Link to={`/blogs/edit/${blog.id}`}>
+                <img
+                  className="w-full"
+                  src="https://bit.ly/2Z4KKcF"
+                  alt="Sunset in the mountains"
+                />
+              </Link>
               <div className="px-3 py-2 bg-white">
                 <div className="font-bold text-xl mb-2">{blog.title}</div>
                 <Dotdotdot clamp={3}>
@@ -36,15 +68,18 @@ const Blogs = props => {
                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
                   {blog.author}
                 </span>
-                <span className="inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+                <span
+                  onClick={() => deleteBlog(blog.id)}
+                  className="inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 cursor-pointer"
+                >
                   Delete
                 </span>
               </div>
             </div>
-          </Link>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

@@ -40,7 +40,7 @@ class Api::V1::BlogsController < ApplicationController
         end
     end
 
-    def delete
+    def destroy
         if @blog.destroy
             render json: { message: 'Blog deleted!' }
         else
