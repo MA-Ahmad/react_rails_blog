@@ -27,6 +27,17 @@ class Api::V1::BlogsController < ApplicationController
         end
     end
 
+    def edit
+    end
+
+    def update
+        if @blog.update(blog_params)
+            render json: @blog
+        else
+            render json: @blog.errors
+        end
+    end
+
     def delete
         if @blog.destroy
             render json: { message: 'Blog deleted!' }
