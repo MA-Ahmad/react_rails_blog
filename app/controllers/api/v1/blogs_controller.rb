@@ -20,7 +20,6 @@ class Api::V1::BlogsController < ApplicationController
     end
 
     def create
-        debugger
         @blog = Blog.create!(blog_params)
         if @blog
             render json: @blog
@@ -30,6 +29,7 @@ class Api::V1::BlogsController < ApplicationController
     end
 
     def edit
+        render json: @blog
     end
 
     def update

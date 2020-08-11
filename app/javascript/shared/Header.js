@@ -33,7 +33,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/blog/new"
+                to="/blogs/new"
                 activeClassName="active"
                 className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
               >

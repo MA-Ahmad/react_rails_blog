@@ -2,8 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "../components/Home";
 import Blogs from "../components/Blogs";
-import Blog from "../components/Blog";
-import NewBlog from "../components/NewBlog";
+import BlogForm from "../shared/BlogForm";
 import Header from "../shared/Header";
 
 export default (
@@ -13,8 +12,20 @@ export default (
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/blogs" exact component={Blogs} />
-        <Route path="/blogs/:id" exact component={Blog} />
-        <Route path="/blog/new" exact component={NewBlog} />
+        <Route
+          path="/blogs/edit/:id"
+          exact
+          render={props => {
+            return <BlogForm {...props} editMode={true} />;
+          }}
+        />
+        <Route
+          path="/blogs/new"
+          exact
+          render={props => {
+            return <BlogForm {...props} editMode={false} />;
+          }}
+        />
       </Switch>
     </div>
   </Router>

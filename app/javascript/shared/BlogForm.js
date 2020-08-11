@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from "react";
 import Alert from "./Alert";
 
-const BlogForm = props => {
+const BlogForm = ({ match, editMode }) => {
   const [alert, setAlert] = useState(false);
+  const [color, setColor] = useState("");
+  const [message, setMessage] = useState("");
+
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (editMode) {
+      fetch(`/api/v1/blogs/edit/${match.params.id}`)
+        .then(response => response.json())
+        .then(response => {
+          setTitle(response.title);
+          setAuthor(response.author);
+          setContent(response.content);
+        });
+    }
+  }, [editMode]);
 
   const handleSubmit = event => {
     event.preventDefault();
     const title = event.target.title.value;
     const author = event.target.author.value;
     const content = event.target.content.value;
+    let msg = "Blog created successfully";
 
     if (title.length == 0 || author.length == 0 || content.length == 0) {
-      console.log("i");
       setAlert(true);
+      setColor("red");
+      msg = "Please fill the required fields";
+      setMessage(msg);
     } else {
       const body = {
         title,
@@ -23,10 +41,12 @@ const BlogForm = props => {
         content: content.replace(/\n/g, "<br> <br>")
       };
 
-      const url = "/api/v1/blogs/create";
+      const url = editMode
+        ? `/api/v1/blogs/update/${match.params.id}`
+        : "/api/v1/blogs/create";
       const token = document.querySelector('meta[name="csrf-token"]').content;
       fetch(url, {
-        method: "POST",
+        method: editMode ? "PUT" : "POST",
         headers: {
           "X-CSRF-Token": token,
           "Content-Type": "application/json"
@@ -40,14 +60,23 @@ const BlogForm = props => {
           throw new Error("Network response was not ok.");
         })
         .catch(error => console.log(error.message));
+
+      setAlert(true);
+      setColor("teal");
+      if (editMode) {
+        msg = "Blog updated successfully";
+      } else {
+        setTitle("");
+        setAuthor("");
+        setContent("");
+      }
+      setMessage(msg);
     }
   };
 
   return (
     <>
-      {alert ? (
-        <Alert color="red" message="Please fill the required fields" />
-      ) : null}
+      {alert ? <Alert color={color} message={message} /> : null}
       <div className="lg:flex items-center justify-center">
         <div className="w-full max-w-sm">
           <form
@@ -107,7 +136,7 @@ const BlogForm = props => {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Create
+                {editMode ? "Update" : "Create"}
               </button>
             </div>
           </form>
