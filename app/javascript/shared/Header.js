@@ -1,26 +1,28 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa";
 
 const Header = () => {
   return (
     <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
-      <a
-        href="#"
-        className="lg:ml-4 lg:mr-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
-      >
-        <img
-          className="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
-          src="https://pbs.twimg.com/profile_images/1128143121475342337/e8tkhRaz_normal.jpg"
-          alt="Andy Leverenz"
-        />
-      </a>
-
       <div
-        className="hidden lg:flex lg:items-center lg:w-auto w-full"
+        className="hidden lg:flex lg:items-center w-full justify-between"
         id="menu"
       >
         <nav>
           <ul className="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
+            <li>
+              <a
+                href="#"
+                className="lg:ml-4 lg:mr-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
+              >
+                <img
+                  className="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
+                  src="https://pbs.twimg.com/profile_images/1128143121475342337/e8tkhRaz_normal.jpg"
+                  alt="Andy Leverenz"
+                />
+              </a>
+            </li>
             <li>
               <NavLink
                 to="/"
@@ -40,24 +42,19 @@ const Header = () => {
                 New
               </NavLink>
             </li>
-            {/* <li>
-              <a
-                className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                href="#"
-              >
-                List
-              </a>
-            </li>
-            <li>
-              <a
-                className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 lg:mb-0 mb-2"
-                href="#"
-              >
-                New
-              </a>
-            </li> */}
           </ul>
         </nav>
+        <Link
+          to={{
+            pathname: "https://github.com/MA-Ahmad/reactBlog"
+          }}
+          target="_blank"
+        >
+          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+            <FaGithub />
+            <span className="pl-2">View Source</span>
+          </button>
+        </Link>
       </div>
 
       <label htmlFor="menu-toggle" className="pointer-cursor lg:hidden block">
