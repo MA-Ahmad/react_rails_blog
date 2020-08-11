@@ -4,7 +4,7 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
       t.string :title
       t.string :author
       t.text :content
-      t.string :image
+      t.string :image, default: 'https://bit.ly/2Z4KKcF'
 
       t.timestamps
     end
