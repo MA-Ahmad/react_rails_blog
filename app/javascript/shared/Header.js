@@ -12,16 +12,19 @@ const Header = () => {
         <nav>
           <ul className="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
             <li>
-              <a
-                href="#"
+              <Link
+                to={{
+                  pathname: "https://github.com/MA-Ahmad"
+                }}
+                target="_blank"
                 className="lg:ml-4 lg:mr-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
               >
                 <img
                   className="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
-                  src="https://pbs.twimg.com/profile_images/1128143121475342337/e8tkhRaz_normal.jpg"
-                  alt="Andy Leverenz"
+                  src="https://avatars2.githubusercontent.com/u/37842853?v=4"
+                  alt="Muhammad Ahmad"
                 />
-              </a>
+              </Link>
             </li>
             <li>
               <NavLink
