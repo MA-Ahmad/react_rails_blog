@@ -78,7 +78,7 @@ const BlogForm = ({ match, editMode }) => {
     <>
       {alert ? <Alert color={color} message={message} /> : null}
       <div className="lg:flex items-center justify-center">
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-md">
           <form
             className="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4"
             onSubmit={handleSubmit}
