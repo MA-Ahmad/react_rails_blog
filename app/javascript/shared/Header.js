@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -21,20 +22,23 @@ const Header = () => {
         <nav>
           <ul className="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
             <li>
-              <a
+              <NavLink
+                to="/"
+                exact
+                activeClassName="active"
                 className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                href="#"
               >
                 Home
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
+              <NavLink
+                to="/blog/new"
+                activeClassName="active"
                 className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                href="#"
               >
                 New
-              </a>
+              </NavLink>
             </li>
             {/* <li>
               <a

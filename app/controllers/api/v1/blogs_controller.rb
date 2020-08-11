@@ -7,18 +7,20 @@ class Api::V1::BlogsController < ApplicationController
     end
 
     def show
-        if @recipe
-            render json: @recipe
+        if @blog
+            render json: @blog
         else
-            render json: @recipe.errors
+            render json: @blog.errors
         end
     end
 
     def new
         @blog = Blog.new
+        render json: @blog
     end
 
     def create
+        debugger
         @blog = Blog.create!(blog_params)
         if @blog
             render json: @blog

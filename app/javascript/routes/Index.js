@@ -9,10 +9,13 @@ import Header from "../shared/Header";
 export default (
   <Router>
     <Header />
-    <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/blogs" exact component={Blogs} />
-      <Route path="/blogs/:id" exact component={Blog} />
-    </Switch>
+    <div className="container mx-auto my-3">
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/blogs" exact component={Blogs} />
+        <Route path="/blogs/:id" exact component={Blog} />
+        <Route path="/blog/new" exact component={NewBlog} />
+      </Switch>
+    </div>
   </Router>
 );
