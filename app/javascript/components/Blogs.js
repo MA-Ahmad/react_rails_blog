@@ -61,14 +61,16 @@ const Blogs = props => {
                   loader={<PageLoader />}
                 />
               </Link>
-              <div className="px-3 py-2 bg-white">
-                <div className="font-bold text-xl mb-2">{blog.title}</div>
+              <div className="px-3 py-2 bg-white h-32">
+                <div className="font-bold text-xl mb-2 truncate">
+                  {blog.title}
+                </div>
                 <Dotdotdot clamp={3}>
                   <p className="text-gray-700 text-base">{blog.content}</p>
                 </Dotdotdot>
               </div>
               <div className="px-3 py-2 bg-white lg:flex items-center justify-between">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 truncate">
                   {blog.author}
                 </span>
                 <span
