@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FiBell } from "react-icons/fi";
 
 const Alert = ({ color, message }) => {
   const [showAlert, setShowAlert] = useState(true);
@@ -13,7 +14,7 @@ const Alert = ({ color, message }) => {
           }
         >
           <span className="text-xl inline-block mr-5 align-middle">
-            <i className="fas fa-bell" />
+            <FiBell />
           </span>
           <span className="inline-block align-middle mr-8">
             <b className="capitalize">{message}</b>
@@ -31,7 +32,3 @@ const Alert = ({ color, message }) => {
 };
 
 export default Alert;
-
-// export default function ClosingAlert() {
-//   return <Alert color="teal" message={m} />;
-// }
