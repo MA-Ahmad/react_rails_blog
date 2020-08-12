@@ -13,6 +13,7 @@
 
 - To configure and create a CRUD Rails application with React.
 - To configure and use Tailwind in React-Rails(RR) app.
+- To show custom alert messages by using Tailwind.
 
 ## What this App does?
 
