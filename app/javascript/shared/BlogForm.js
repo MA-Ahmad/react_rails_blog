@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Alert from "./Alert";
 
-const BlogForm = ({ match, editMode }) => {
+const BlogForm = props => {
+  const { match, history, editMode, handleData } = props;
   const [alert, setAlert] = useState(false);
   const [color, setColor] = useState("");
   const [message, setMessage] = useState("");
-
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
@@ -26,56 +26,54 @@ const BlogForm = ({ match, editMode }) => {
     }
   }, [editMode]);
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const title = event.target.title.value;
-    const author = event.target.author.value;
-    const content = event.target.content.value;
-    let msg = "Blog created successfully";
+  const sendRequest = url => {
+    const body = {
+      title,
+      author,
+      content: content.replace(/\n/g, "<br> <br>")
+    };
 
-    if (title.length == 0 || author.length == 0 || content.length == 0) {
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+    fetch(url, {
+      method: editMode ? "PUT" : "POST",
+      headers: {
+        "X-CSRF-Token": token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => {
+        if (editMode) {
+          props.handleEditAlert(true);
+          props.handleCreateAlert(false);
+        } else {
+          props.handleCreateAlert(true);
+          props.handleEditAlert(false);
+        }
+        return history.push("/");
+      })
+      .catch(error => console.log(error.message));
+  };
+
+  const handleSubmit = event => {
+    if (title.length == 0 || author.length == 0) {
       setAlert(true);
       setColor("red");
-      msg = "Please fill the required fields";
-      setMessage(msg);
+      setMessage("Please fill the required fields");
     } else {
-      const body = {
-        title,
-        author,
-        content: content.replace(/\n/g, "<br> <br>")
-      };
-
       const url = editMode
         ? `/api/v1/blogs/update/${match.params.id}`
         : "/api/v1/blogs/create";
-      const token = document.querySelector('meta[name="csrf-token"]').content;
-      fetch(url, {
-        method: editMode ? "PUT" : "POST",
-        headers: {
-          "X-CSRF-Token": token,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Network response was not ok.");
-        })
-        .catch(error => console.log(error.message));
-
-      setAlert(true);
-      setColor("teal");
-      if (editMode) {
-        msg = "Blog updated successfully";
-      } else {
-        setTitle("");
-        setAuthor("");
-        setContent("");
-      }
-      setMessage(msg);
+      sendRequest(url);
+      handleData(true);
     }
+    event.preventDefault();
   };
 
   return (
