@@ -8,7 +8,8 @@ import PageLoader from "../shared/PageLoader";
 const Blogs = props => {
   const [isDataUpdated, setIsDataUpdated] = useState(props.isDataUpdated);
   const [blogs, setBlogs] = useState([]);
-  const [blogId, setBlogId] = useState("");
+  const [createAlert, setCreateAlert] = useState(props.createAlert);
+  const [editAlert, setEditAlert] = useState(props.editAlert);
   const [showAlert, setShowAlert] = useState(false);
   const [color, setColor] = useState("");
   const [message, setMessage] = useState("");
@@ -20,28 +21,25 @@ const Blogs = props => {
       .then(response => {
         setBlogs(response);
       });
+    setIsDataUpdated(false);
   };
-  useEffect(() => {
-    fetchRequest();
-  }, [blogId]);
 
   useEffect(() => {
-    console.log(props);
-    setColor("teal");
-    if (props.createAlert) {
+    if (createAlert) {
       setShowAlert(true);
+      setColor("teal");
       setMessage("Blog created successfully");
-    } else if (props.editAlert) {
+    } else if (editAlert) {
       setShowAlert(true);
+      setColor("teal");
       setMessage("Blog updated successfully");
     }
     fetchRequest();
   }, [isDataUpdated]);
 
   const deleteBlog = id => {
-    const url = `/api/v1/blogs/destroy/${id}`;
     const token = document.querySelector('meta[name="csrf-token"]').content;
-    fetch(url, {
+    fetch(`/api/v1/blogs/destroy/${id}`, {
       method: "DELETE",
       headers: {
         "X-CSRF-Token": token,
@@ -56,10 +54,13 @@ const Blogs = props => {
       })
       .then(() => props.history.push("/"))
       .catch(error => console.log(error.message));
-    setBlogId(id);
+    // setBlogId(id);
+    setIsDataUpdated(true);
     setShowAlert(true);
     setColor("red");
     setMessage("Blog deleted successfully");
+    setEditAlert(false);
+    setCreateAlert(false);
   };
 
   return (
